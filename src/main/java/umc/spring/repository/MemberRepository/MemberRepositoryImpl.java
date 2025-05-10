@@ -26,6 +26,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         return jpaQueryFactory
                 .select(constructor(
                         MyPageDto.class,
+                        member.id,
                         member.name,
                         member.email,
                         member.phone,
