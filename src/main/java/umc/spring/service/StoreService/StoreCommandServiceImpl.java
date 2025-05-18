@@ -7,15 +7,19 @@ import umc.spring.apiPayload.exception.handler.RegionHandler;
 import umc.spring.converter.StoreConverter;
 import umc.spring.domain.Region;
 import umc.spring.domain.Store;
+import umc.spring.repository.FoodRepository.FoodCategoryRepository;
 import umc.spring.repository.RegionRepository.RegionRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
 import umc.spring.web.dto.StoreCreateRequestDTO;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class StoreCommandServiceImpl implements StoreCommandService {
     private final StoreRepository storeRepository;
     private final RegionRepository regionRepository;
+    private final FoodCategoryRepository categoryRepository;
 
     @Override
     public Store addStore(StoreCreateRequestDTO.StoreCreateDTO request, Long regionId) {
