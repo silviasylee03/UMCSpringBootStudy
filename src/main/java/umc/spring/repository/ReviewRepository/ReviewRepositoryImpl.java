@@ -13,13 +13,14 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     private final EntityManager em;
 
     @Override
-    public void addReview(String title, Float score, Long member_id, Long store_id) {
-        if (title != null || score != null || member_id != null || store_id != null) {
+    public void addReview(Long storeId, Long memberId, String title, String content, Integer score) {
+        if (title != null || score != null || memberId != null || storeId != null) {
             Review review = Review.builder()
                     .title(title)
-                    .score(score) // DB가 float이면 변환
-                    .member(em.getReference(Member.class, member_id))
-                    .store(em.getReference(Store.class, store_id))
+                    .content(content)
+                    .score(score)
+                    .member(em.getReference(Member.class, memberId))
+                    .store(em.getReference(Store.class, storeId))
                     .build();
 
             em.persist(review);
