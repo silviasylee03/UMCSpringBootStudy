@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
-import umc.spring.validation.annotaion.ExistCategories;
+import umc.spring.validation.annotation.ExistCategories;
 
 import java.util.List;
 

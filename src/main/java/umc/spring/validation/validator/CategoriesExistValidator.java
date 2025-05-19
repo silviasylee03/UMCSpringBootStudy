@@ -4,10 +4,8 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import umc.spring.apiPayload.code.status.ErrorStatus;
-import umc.spring.repository.FoodRepository.FoodCategoryRepository;
 import umc.spring.service.FoodCategoryService.FoodCategoryService;
-import umc.spring.validation.annotaion.ExistCategories;
+import umc.spring.validation.annotation.ExistCategories;
 
 import java.util.List;
 

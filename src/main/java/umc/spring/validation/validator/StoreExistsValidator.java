@@ -5,8 +5,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.spring.repository.StoreRepository.StoreRepository;
-import umc.spring.validation.annotaion.ExistCategories;
-import umc.spring.validation.annotaion.StoreExists;
+import umc.spring.validation.annotation.StoreExists;
 
 @Component
 @RequiredArgsConstructor

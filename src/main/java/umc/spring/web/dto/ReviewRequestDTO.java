@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import umc.spring.validation.annotaion.StoreExists;
+import umc.spring.validation.annotation.StoreExists;
 
 public class ReviewRequestDTO {
     @Getter
