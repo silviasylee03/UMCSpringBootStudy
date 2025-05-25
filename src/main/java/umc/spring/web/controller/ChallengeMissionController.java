@@ -19,6 +19,7 @@ import umc.spring.service.MemberMissionService.MemberMissionQueryService;
 import umc.spring.service.MemberService.MemberQueryService;
 import umc.spring.service.MissionService.MissionCommandService;
 import umc.spring.service.MissionService.MissionQueryService;
+import umc.spring.validation.annotation.ValidPage;
 import umc.spring.web.dto.MissionChallengeRequestDTO;
 import umc.spring.web.dto.MissionChallengeResponseDTO;
 
@@ -39,7 +40,7 @@ public class ChallengeMissionController {
         return ResponseEntity.ok(ApiResponse.onSuccess("미션 도전이 성공적으로 등록되었습니다."));
     }
 
-    @PostMapping("/{memberId}/challenge")
+    @GetMapping("/{memberId}/challenge")
     @Operation(summary = "내가 진행 중인 미션 목록 조회 API")
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200",description = "OK, 성공"),
@@ -48,10 +49,13 @@ public class ChallengeMissionController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
     })
     @Parameters({
-            @Parameter(name = "memberId", description = "유저 아이디, path variable 입니다!")
+            @Parameter(name = "memberId", description = "유저 아이디, path variable 입니다!"),
+            @Parameter(name = "page", description = "페이지 번호 (1부터 시작)", schema = @Schema(defaultValue = "1", minimum = "1"))
     })
-    public ApiResponse<MissionChallengeResponseDTO.MemberChallengingMissionListDTO> getMissionList(@PathVariable(name = "memberId") Long memberId, @RequestParam(name = "page") Integer page){
-        Page<MemberMission> missionList = memberQueryService.getMemberMissionList(memberId, page);
+    public ApiResponse<MissionChallengeResponseDTO.MemberChallengingMissionListDTO> getMissionList(
+            @PathVariable(name = "memberId") Long memberId,
+            @ValidPage @RequestParam(name = "page", defaultValue = "1") Integer page){
+        Page<MemberMission> missionList = memberQueryService.getMemberMissionList(memberId, page - 1);
         return ApiResponse.onSuccess(MissionConverter.missionToMemberChallengingMissionListDTO(missionList));
     }
 

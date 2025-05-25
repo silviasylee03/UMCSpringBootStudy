@@ -23,6 +23,7 @@ import umc.spring.domain.Store;
 import umc.spring.service.StoreService.StoreCommandService;
 import umc.spring.service.StoreService.StoreQueryService;
 import umc.spring.validation.annotation.ExistStore;
+import umc.spring.validation.annotation.ValidPage;
 import umc.spring.web.dto.MissionChallengeResponseDTO;
 import umc.spring.web.dto.StoreCreateRequestDTO;
 import umc.spring.web.dto.StoreCreateResponseDTO;
@@ -49,10 +50,13 @@ public class StoreRestController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
     })
     @Parameters({
-            @Parameter(name = "storeId", description = "가게의 아이디, path variable 입니다!")
+            @Parameter(name = "storeId", description = "가게의 아이디, path variable 입니다!"),
+            @Parameter(name = "page", description = "페이지 번호 (1부터 시작)", schema = @Schema(defaultValue = "1", minimum = "1"))
     })
-    public ApiResponse<StoreCreateResponseDTO.ReviewPreviewListDTO> getReviewList(@ExistStore @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") Integer page){
-        Page<Review> reviewList = storeQueryService.getReviewList(storeId, page);
+    public ApiResponse<StoreCreateResponseDTO.ReviewPreviewListDTO> getReviewList(
+            @ExistStore @PathVariable(name = "storeId") Long storeId,
+            @ValidPage @RequestParam(name = "page", defaultValue = "1") Integer page){
+        Page<Review> reviewList = storeQueryService.getReviewList(storeId, page - 1);
         return ApiResponse.onSuccess(StoreConverter.reviewPreviewListDTO(reviewList));
     }
 
@@ -65,10 +69,13 @@ public class StoreRestController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
     })
     @Parameters({
-            @Parameter(name = "storeId", description = "가게의 아이디, path variable 입니다!")
+            @Parameter(name = "storeId", description = "가게의 아이디, path variable 입니다!"),
+            @Parameter(name = "page", description = "페이지 번호 (1부터 시작)", schema = @Schema(defaultValue = "1", minimum = "1"))
     })
-    public ApiResponse<MissionChallengeResponseDTO.StoreMissionListDTO> getMissionList(@ExistStore @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") Integer page){
-        Page<Mission> missionList = storeQueryService.getMissionList(storeId, page);
+    public ApiResponse<MissionChallengeResponseDTO.StoreMissionListDTO> getMissionList(
+            @ExistStore @PathVariable(name = "storeId") Long storeId,
+            @ValidPage @RequestParam(name = "page", defaultValue = "1") Integer page){
+        Page<Mission> missionList = storeQueryService.getMissionList(storeId, page - 1);
         return ApiResponse.onSuccess(MissionConverter.storeMissionListDTO(missionList));
     }
 }

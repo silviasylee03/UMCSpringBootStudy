@@ -14,6 +14,7 @@ import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.MemberConverter;
 import umc.spring.domain.Review;
 import umc.spring.service.MemberService.MemberQueryService;
+import umc.spring.validation.annotation.ValidPage;
 import umc.spring.web.dto.MemberResponseDTO;
 
 @RestController
@@ -32,10 +33,13 @@ public class MemberReviewController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
     })
     @Parameters({
-            @Parameter(name = "memberId", description = "유저 아이디, path variable 입니다!")
+            @Parameter(name = "memberId", description = "유저 아이디, path variable 입니다!"),
+            @Parameter(name = "page", description = "페이지 번호 (1부터 시작)", schema = @Schema(defaultValue = "1", minimum = "1"))
     })
-    public ApiResponse<MemberResponseDTO.MemberReviewListDTO> getMemberReviewList(@PathVariable(name = "memberId") Long memberId, @RequestParam(name = "page") Integer page) {
-        Page<Review> memberReviewList = memberQueryService.getMemberReviewList(memberId, page);
+    public ApiResponse<MemberResponseDTO.MemberReviewListDTO> getMemberReviewList(
+            @PathVariable(name = "memberId") Long memberId,
+            @ValidPage @RequestParam(name = "page", defaultValue = "1") Integer page) {
+        Page<Review> memberReviewList = memberQueryService.getMemberReviewList(memberId, page - 1);
         return ApiResponse.onSuccess(MemberConverter.memberReviewListDTO(memberReviewList));
     }
 }
