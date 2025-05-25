@@ -15,6 +15,7 @@ import umc.spring.apiPayload.ApiResponse;
 import umc.spring.converter.MissionConverter;
 import umc.spring.domain.Mission;
 import umc.spring.domain.mapping.MemberMission;
+import umc.spring.service.MemberMissionService.MemberMissionQueryService;
 import umc.spring.service.MemberService.MemberQueryService;
 import umc.spring.service.MissionService.MissionCommandService;
 import umc.spring.service.MissionService.MissionQueryService;
@@ -27,6 +28,7 @@ import umc.spring.web.dto.MissionChallengeResponseDTO;
 public class ChallengeMissionController {
     private final MissionCommandService missionCommandService;
     private final MemberQueryService memberQueryService;
+    private final MemberMissionQueryService memberMissionQueryService;
 
     @PostMapping("/challenge")
     public ResponseEntity<ApiResponse<String>> challengeMission(
@@ -51,5 +53,14 @@ public class ChallengeMissionController {
     public ApiResponse<MissionChallengeResponseDTO.MemberChallengingMissionListDTO> getMissionList(@PathVariable(name = "memberId") Long memberId, @RequestParam(name = "page") Integer page){
         Page<MemberMission> missionList = memberQueryService.getMemberMissionList(memberId, page);
         return ApiResponse.onSuccess(MissionConverter.missionToMemberChallengingMissionListDTO(missionList));
+    }
+
+    @PostMapping("/{memberId}/complete/{missionId}")
+    public ResponseEntity<Void> completeMission(
+            @PathVariable Long memberId,
+            @PathVariable Long missionId
+    ) {
+        memberMissionQueryService.completeMission(memberId, missionId);
+        return ResponseEntity.ok().build();
     }
 }
