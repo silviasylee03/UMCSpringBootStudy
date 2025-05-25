@@ -32,4 +32,29 @@ public class MissionChallengeResponseDTO {
         String missionStatus;
         LocalDate deadline;
     }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MemberChallengingMissionListDTO {
+        List<MemberChallengingMissionDTO> memberChallengingMissions;
+        Integer listSize;
+        Integer totalPage;
+        Long totalElements;
+        Boolean isFirst;
+        Boolean isLast;
+    }
+
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MemberChallengingMissionDTO {
+        Integer reward;
+        String content;
+        String missionStatus;
+        String storeName;
+        LocalDate deadline;
+    }
 }

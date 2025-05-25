@@ -2,6 +2,7 @@ package umc.spring.converter;
 
 import org.springframework.data.domain.Page;
 import umc.spring.domain.Mission;
+import umc.spring.domain.mapping.MemberMission;
 import umc.spring.web.dto.MissionChallengeResponseDTO;
 
 import java.util.List;
@@ -28,6 +29,30 @@ public class MissionConverter {
                 .totalElements(missionList.getTotalElements())
                 .listSize(missionDTOList.size())
                 .storeMissions(missionDTOList)
+                .build();
+    }
+
+    public static MissionChallengeResponseDTO.MemberChallengingMissionDTO missionToMemberChallengingMissionDTO(MemberMission mission) {
+        return MissionChallengeResponseDTO.MemberChallengingMissionDTO.builder()
+                .reward(mission.getMission().getReward())
+                .content(mission.getMission().getMissionSpec())
+                .missionStatus(mission.getStatus().toString())
+                .deadline(mission.getMission().getDeadline())
+                .storeName(mission.getMission().getStore().getName())
+                .build();
+    }
+
+    public static MissionChallengeResponseDTO.MemberChallengingMissionListDTO missionToMemberChallengingMissionListDTO(Page<MemberMission> missionList) {
+        List<MissionChallengeResponseDTO.MemberChallengingMissionDTO> missionDTOList = missionList.stream()
+                .map(MissionConverter::missionToMemberChallengingMissionDTO).collect(Collectors.toList());
+
+        return MissionChallengeResponseDTO.MemberChallengingMissionListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(missionDTOList.size())
+                .memberChallengingMissions(missionDTOList)
                 .build();
     }
 }
