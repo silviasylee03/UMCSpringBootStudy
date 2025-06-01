@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.emums.Gender;
 import umc.spring.domain.emums.MemberStatus;
+import umc.spring.domain.emums.Role;
 import umc.spring.domain.emums.SocialType;
 import umc.spring.domain.mapping.MemberAgree;
 import umc.spring.domain.mapping.MemberMission;
@@ -62,6 +63,12 @@ public class Member extends BaseEntity {
 
     private Boolean phoneVerified;
 
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberAgree> memberAgreeList = new ArrayList<>();
 
@@ -73,4 +80,8 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 }

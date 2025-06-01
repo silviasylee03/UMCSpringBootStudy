@@ -31,6 +31,9 @@ public class MemberConverter {
             case 2:
                 gender = Gender.FEMALE;
                 break;
+            case 3:
+                gender = Gender.NONE;
+                break;
         }
 
         return Member.builder()
@@ -39,6 +42,9 @@ public class MemberConverter {
                 .gender(gender)
                 .name(request.getName())
                 .memberPreferList(new ArrayList<>())
+                .email(request.getEmail())   // 추가된 코드
+                .password(request.getPassword())   // 추가된 코드
+                .role(request.getRole())   // 추가된 코드
                 .build();
     }
 
