@@ -21,3 +21,8 @@ spring:
     web:
       pageable:
         one-indexed-parameters: true
+  jwt:
+    token:
+      secretKey: umceightfightingjwttokenauthentication
+      expiration:
+        access: 14400000
