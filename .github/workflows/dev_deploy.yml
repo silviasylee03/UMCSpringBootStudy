@@ -34,7 +34,7 @@ jobs:
       - name: Upload build artifact  # 빌드된 아티팩트 업로드
         uses: actions/upload-artifact@v4
         with:
-          name: umc7thServer
+          name: umc8thServer
           path: build/libs/*.jar
 
   deploy:
