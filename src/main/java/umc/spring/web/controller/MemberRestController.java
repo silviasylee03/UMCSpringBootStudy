@@ -42,4 +42,12 @@ public class MemberRestController {
     public ApiResponse<MemberResponseDTO.MemberInfoDTO> getMyInfo(HttpServletRequest request) {
         return ApiResponse.onSuccess(memberQueryService.getMemberInfo(request));
     }
+
+    @GetMapping("/oauth-success")
+    @Operation(summary = "소셜 로그인 성공 후 토큰 전달용 리다이렉트", description = "소셜 로그인 후 JWT 토큰을 쿼리 파라미터로 받아 확인합니다.")
+    public ApiResponse<String> oauthSuccess(@RequestParam("token") String token) {
+        // 프론트에서 이 토큰을 받아 저장하고, 이후 요청에 Authorization 헤더로 보내면 됨
+        return ApiResponse.onSuccess("JWT 토큰: " + token);
+    }
+
 }

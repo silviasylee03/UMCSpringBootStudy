@@ -31,13 +31,13 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = true, length = 100)
     private String name;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = true, length = 40)
     private String address;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = true, length = 40)
     private String specAddress;
 
     @Enumerated(EnumType.STRING)
@@ -63,7 +63,7 @@ public class Member extends BaseEntity {
 
     private Boolean phoneVerified;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password;
 
     @Enumerated(EnumType.STRING)
