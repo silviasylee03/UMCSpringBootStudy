@@ -27,14 +27,17 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Integer score;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
+
 }
