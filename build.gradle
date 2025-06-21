@@ -96,3 +96,7 @@ tasks.withType(JavaCompile) {
 			'java.base/java.util=ALL-UNNAMED'
 	]
 }
+
+jar {
+	enabled = false
+}
